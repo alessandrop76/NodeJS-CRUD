@@ -1,0 +1,69 @@
+<%- include('../../partials/header.ejs')-%>
+    <%- include('../../partials/navbar.ejs')-%>
+
+        <body>
+            <div class="container">
+                <hr>
+                <h2>Artigos</h2>
+                <a href="/admin/articles/new"><button class="btn btn-success">Criar novo Artigo</button></a>
+                <hr>
+
+            </div>
+            <br />
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th hidden>ID</th>
+                            <th>Título</th>
+                            <th hidden>Slug</th>
+                            <th>Categorias</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% articles.forEach(article=> { %>
+                            <tr>
+                                <td hidden>
+                                    <%= article.id %>
+                                </td>
+                                <td>
+                                    <%= article.title %>
+                                </td>
+                                <td hidden>
+                                    <%= article.slug %>
+                                </td>
+                                <td id="categoriaDoArtigo">
+                                    <%= article.category.title %>
+                                </td>
+                                <td>
+                                    <a href="/admin/articles/update/<%= article.id %>">
+                                        <button type="submit" class="btn btn-warning">Editar</button>
+                                    </a>
+                                    <form method="POST" action="/articles/delete" style="display: inline;"
+                                        onsubmit="confirmarDelecao(event,this)">
+                                        <input hidden type="text" name="id" value="<%= article.id %>">
+                                        <button type="submit" class="btn btn-danger">Excluir</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }) %>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <hr>
+
+        </body>
+        <%- include('../../partials/footer.ejs')-%>
+
+            <script>
+                function confirmarDelecao(event, form) {
+                    event.preventDefault();
+                    var decision = confirm("Deseja realmente excluir ?");
+                    if (decision) {
+                        form.submit();
+                    }
+                }
+            </script>

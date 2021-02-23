@@ -1,0 +1,59 @@
+<%- include('../../partials/header.ejs')-%>
+    <%- include('../../partials/navbar.ejs')-%>
+
+        <body>
+            <div class="container">
+                <hr>
+                <h2>Usuários do Sistema</h2>
+                <a href="/admin/users/create"><button class="btn btn-success">Criar novo Usuário</button></a>
+                <hr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Usuário desde</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% users.forEach(user => {%>
+                            <tr>
+                                <td>
+                                    <%= user.id%>
+                                </td>
+                                <td>
+                                    <%= user.email%>
+                                </td>
+                                <td>
+                                    <%= user.createdAt%>
+                                </td>
+                                <td>
+                                    <a href="/>">
+                                        <button type="submit" class="btn btn-warning">Editar</button>
+                                    </a>
+                                     <form method="POST" action="/" style="display: inline;"
+                                        onsubmit="confirmarDelecao(event, this)">
+                                        <input hidden type="text" name="id" value="">
+                                        <button type="submit" class="btn btn-danger">Excluir</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <%})%>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+        </body>
+
+                <%- include('../../partials/footer.ejs')-%>
+            <script>
+                function confirmarDelecao(event, form) {
+                    event.preventDefault();
+                    var decision = confirm("Deseja realmente excluir ?");
+                    if (decision) {
+                        form.submit();
+                    }
+                }
+            </script>
